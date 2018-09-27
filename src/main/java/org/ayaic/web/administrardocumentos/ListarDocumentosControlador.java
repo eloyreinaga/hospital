@@ -1,0 +1,35 @@
+package org.ayaic.web.administrardocumentos;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.ayaic.domain.Clientes;
+import org.ayaic.domain.logic.MiFacade;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class ListarDocumentosControlador {
+
+    private final MiFacade mi;
+
+    public ListarDocumentosControlador(MiFacade mi) {
+        this.mi = mi;
+    }
+
+    @RequestMapping("/ListarDocumentos.do")
+    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        Map modelo = new HashMap();
+
+        Clientes cliente = (Clientes) request.getSession().getAttribute("__sess_cliente");
+
+        List listarDocumentos = this.mi.getListarDocumentos();
+        modelo.put("listarDocumentos", listarDocumentos);
+
+        return new ModelAndView("administrardocumentos/ListarDocumentos", modelo);
+
+    }
+}

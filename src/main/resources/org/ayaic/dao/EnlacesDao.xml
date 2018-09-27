@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ayaic.dao.EnlacesDao">
+
+    <resultMap id="enlace" type="Enlaces">
+        <result property="id_enlace" column="id_enlace" />
+        <result property="enlace"    column="enlace" />
+        <result property="imagen"    column="imagen" />
+        <result property="ruta"      column="ruta" />
+        <result property="tabla"     column="tabla" />
+        <result property="permiso"   column="permiso" />
+    </resultMap>
+
+    <select id="getListarEnlaces" resultMap="enlace">
+        SELECT * FROM ctg_listar_enlaces(#{id_categoria}, #{id_rol})
+        ORDER BY orden, enlace;
+    </select>
+
+    <select id="getBuscarEnlaces" resultMap="enlace">
+        SELECT *
+        FROM ctg_buscar_enlace(#{id_enlace}) ;
+    </select>
+
+    <!-- INICIO Combustible -->
+    <select id="getEnlBuscarEnlace" resultMap="enlace">
+        SELECT *
+        FROM enl_buscar_enlace(#{id_enlace}) ;
+    </select>
+ 
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ayaic.dao.ActividadDao">
+    
+    <resultMap id="datosActividad" type="Actividad">
+        <result property="id_actividad"             column="id_actividad"/>
+        <result property="fecha"                    column="fecha"/>
+        <result property="actividad"                column="actividad"/>
+        <result property="tema"                     column="tema"/>
+        <result property="numero"                   column="numero"/>
+        <result property="id_estado"                column="id_estado"/>
+        <result property="id_persona"               column="id_persona"/>
+    </resultMap>
+
+    <select id="getListarActividad" resultMap="datosActividad">
+        SELECT id_actividad, fecha, actividad, tema, numero, id_estado,id_persona
+        FROM actividad
+        where id_estado='A' and id_persona= #{id_persona} 
+        ORDER BY fecha DESC,actividad
+    </select>
+  
+    <select id="getListarActividadTot" resultMap="datosActividad">
+        SELECT id_actividad, fecha, actividad, tema, numero, id_estado,id_persona
+        FROM actividad
+        where id_estado='A' and id_persona= #{id_persona} and fecha between #{fecha} and #{fecha2} 
+        ORDER BY fecha  DESC,actividad
+    </select>
+  
+    <select id="getListarActividadTodos" resultMap="datosActividad">
+        SELECT id_actividad, fecha, actividad, tema, numero, id_estado,id_persona FROM actividad
+        where id_estado='A' and fecha between #{fecha} and #{fecha2} ORDER BY fecha  DESC,actividad
+    </select>
+  
+    <select id="getDatosActividad" resultMap="datosActividad">
+        SELECT id_actividad, fecha, actividad, tema, numero, id_estado
+        FROM actividad
+        where id_actividad= #{id_actividad};
+    </select>
+  
+    <insert id="setCrearActividad">
+        INSERT INTO actividad(fecha, actividad, tema, numero, duracion, lugar, id_estado,id_persona, num_fam_realiza, num_nueva_carpeta, 
+        num_seg_carpeta, reunion_cai, act_comunidad, sup_recibida, cap_recibida, num_medico, num_enfermera, num_auxiliar, 
+        num_odontologo, num_otro, num_comun_cai,reunion_comsalud, reunion_autoriades, feria, actividad_educa,num_escolar, 
+        num_jovenes, num_adultos, num_dirigentes, num_promotor,numero_otros, num_visitas_fam, num_sugerencias, num_quejas, 
+        num_acredita,num_auditoria, cod_esta)
+        VALUES ( #{fecha}, #{actividad}, #{tema}, #{numero},#{diasi},#{cadena},'A',#{id_persona},#{suma11},#{suma12},
+        #{suma13},#{suma8},#{suma2},#{suma3},#{suma4}, #{suma14},#{suma15},#{suma16},
+        #{suma17},#{suma18},#{suma19},#{suma5},#{suma6},#{suma7},#{suma1},#{suma20},
+        #{suma21},#{suma22},#{suma23},#{suma24},#{suma25},#{suma26},#{suma27},#{suma28},
+        #{suma29},#{suma30},#{cod_esta});     
+    </insert>
+  
+    <update id="setEliminarActividad" >
+        update actividad set  id_estado = 'B' where  id_actividad = #{id_actividad};
+    </update>
+
+</mapper>
